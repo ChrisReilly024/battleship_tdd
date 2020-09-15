@@ -25,7 +25,7 @@ describe "battleship checker" do
             expect(checker([[0,0,0,0,0,1,1,0,0,0],[0,0,0,0,0,1,0,0,0,0]])).to eq(false)
         end
         it "should return true if i == 0 and a horiz ship borders no ship below" do
-            expect(checker([[0,0,0,0,0,1,1,0,0,0],[0,0,0,0,0,0,1,0,0,0]])).to eq(true)
+            expect(checker([[0,0,0,0,0,1,1,0,0,0],[0,0,0,0,0,0,0,0,0,0]])).to eq(true)
             expect(checker([[0,0,0,0,0,0,0,0,1,1],[0,0,0,0,0,0,0,0,0,0]])).to eq(true)
         end
         it "should return false if i == 0 and a vertic ship borders a ship on either side" do
