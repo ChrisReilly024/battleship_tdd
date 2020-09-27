@@ -56,11 +56,16 @@ describe "battleship checker" do
             expect(checker([[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[1,1,0,0,0,0,0,0,0,0],[0,1,0,0,0,0,0,0,0,0]])).to eq(false)
         end
     end    
+end
 
-    describe "ship_count" do      
-            it "should take in a dimensional array(grid) as an argument" do 
-                grid = [[111],[222]]
-                expect {ship_count(grid)}.to_not raise_error
-            end
-        end
-    end
+    # describe "ship_count" do      
+    #         it "should take in a dimensional array(grid) as an argument" do 
+    #             grid = [[111],[222]]
+    #             expect (ship_count(grid)).to_not raise_error
+    #         end
+    #     end
+
+
+    # it "should return false if there are to few or to many ships"
+    # grid = [[1,0,1,1,0,1,1,0,1,1],[0,1,0,1,1,1,0,1,1,1],[0,0,0,1,1,1,1,0,0,0]]
+    # expect (validate_battlefield(grid)).to_not eq(false)
