@@ -85,8 +85,17 @@ describe "elevator" do
             elevator.level = 4
             expect(elevator.level_up_down).to eq(3)
         end
-
     end
+
+    # describe "#logger" do
+    #     it "should add the current level into the log if a passenger boarded or departed and the current level" do
+
+    #     end
+
+    #     it "should not add the current level into the log if the current level is the most recent entry. no repeats" do
+
+    #     end
+    # end
 
 
 end
