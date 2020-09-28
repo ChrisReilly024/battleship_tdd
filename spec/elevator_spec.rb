@@ -20,4 +20,15 @@ describe "elevator" do
             expect(elevator.log).to eq([0])
         end        
     end    
+
+    describe "#full?" do
+        it "should return false if the elevator is not filled to capacity" do
+            expect(elevator.full?).to eq(false)
+        end
+        
+        it "should return true if the elevator is filled to capacity" do
+            elevator.lift << 1 << 2 << 3 << 4 << 5
+            expect(elevator.full?).to eq(true)
+        end
+    end
 end

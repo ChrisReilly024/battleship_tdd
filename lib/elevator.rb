@@ -10,6 +10,12 @@ class Lift
         @log = [0]
     end
 
-    
+    def full?
+        @lift.count >= @capacity
+    end
+
 end
 
+    
+
+        
