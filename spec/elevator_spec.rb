@@ -6,12 +6,16 @@ describe "elevator" do
     describe "#initialize" do
         it 'should accept a floor plan and lift capacity' do
             lift
+            expect(Lift.new([[],[]], 5)).to_not raise_error
         end
 
-        it "should have getter methods for floor plan and lift capacities" do
-            expect(lift).to respond_to(:floors)
-            expect(lift).to respond_to(:capacity)
+        it "should set @floors and @capacity with arguments" do
+            expect(lift.instance_variable_get(:@floors)).to eq([[],[],[5,5,5],[],[],[],[]])
+            expect(lift.instance_variable_get(:@capacity)).to eq(5)
         end
+     
+        it "should"
+
         
     end    
 end
