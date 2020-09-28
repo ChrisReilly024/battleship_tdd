@@ -9,5 +9,7 @@ class Lift
         @direction = 'up'
         @log = [0]
     end
+
+    
 end
 
