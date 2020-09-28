@@ -1,10 +1,11 @@
 
 class Lift
     attr_reader :capacity
-    attr_accessor :lift, :direction, :log, :floors
+    attr_accessor :lift, :direction, :log, :floors, :level
     def initialize(floors,capacity)
         @floors = floors
         @capacity = capacity
+        @level = 0
         @lift = []
         @direction = 'up'
         @log = [0]
@@ -22,15 +23,14 @@ class Lift
         end
     end
 
+    def level_up_down
+        if @level == 0
+            @level += 1 
+        elsif @level == @floors.count - 1
+            @level -= 1
+        else 
+            @direction == 'up' ? @level += 1 : @level -= 1
+        end
+    end
 end
-
-# a = Lift.new([[],[],[5,5,5],[],[],[],[]], 5)
-# p a
-# p a.shutdown
-
-# b = Lift.new([[1],[],[],[],[],[],[]], 5)
-# p b
-# p b.shutdown
-
-
-        
+  

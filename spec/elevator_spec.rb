@@ -8,15 +8,16 @@ describe "elevator" do
             elevator
         end
 
-        it "should set @floors and @capacity with arguments" do
+        it "should set @floors to a two-dimensional array and @capacity, to an integer, with given arguments" do
             expect(elevator.instance_variable_get(:@floors)).to eq([[],[],[5,5,5],[],[],[],[]])
             expect(elevator.instance_variable_get(:@capacity)).to eq(5)
         end
      
-        it "should have instance values for the lift, it's direction, default up, and floor log starting at 0" do
+        it "should have values for the lift, an array representing all boarded passengers, it's direction, default up, floor log, an array representing all floors passengers have departed or boarded starting at 0, and the lift's current level, default ground floor" do
             expect(elevator.lift).to eq([])
             expect(elevator.direction).to eq('up')
             expect(elevator.log).to eq([0])
+            expect(elevator.level).to eq(0)
         end        
     end    
 
@@ -65,20 +66,26 @@ describe "elevator" do
     describe "#level_up_down" do
         it "should increase level by 1 if the lift is on the ground floor" do
             elevator.level = 0
+            expect(elevator.level_up_down).to eq(1)
         end
-
+        
         it "should increase level by 1 if the lift is not on the ground floor and @direction is set to up" do
             elevator.level = 2
+            elevator.direction = 'up'
+            expect(elevator.level_up_down).to eq(3)
         end
         
         it "should decrease level by 1 if the lift is at the top floor" do
             elevator.level = elevator.floors.count - 1
-        end
-
-        it "should decrease level by 1 if the lift is not on the top floor and @direction is set to down" do
-            elevator.level = 4
+            expect(elevator.level_up_down).to eq(elevator.floors.count - 2)
         end
         
+        it "should decrease level by 1 if the lift is not on the top floor and @direction is set to down" do
+            elevator.direction = 'down'
+            elevator.level = 4
+            expect(elevator.level_up_down).to eq(3)
+        end
+
     end
 
 
