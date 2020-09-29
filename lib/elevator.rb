@@ -23,6 +23,10 @@ class Lift
         end
     end
 
+    def queue?
+        @floors[@level].count > 0
+    end
+
     def level_up_down
         if @level == 0
             @level += 1 
@@ -32,4 +36,14 @@ class Lift
             @direction == 'up' ? @level += 1 : @level -= 1
         end
     end
+
+    def depart_rider
+        @lift.delete(@level) if @lift.include?(@level)
+        @lift
+    end
+
+
 end
+
+# a = Lift.new([[],[],[5,5,5],[],],5)
+# p a.add_rider

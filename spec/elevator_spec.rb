@@ -69,7 +69,7 @@ describe "elevator" do
             expect(elevator.level_up_down).to eq(1)
         end
         
-        it "should increase level by 1 if the lift is not on the ground floor and @direction is set to up" do
+        it "should increase level by 1 if direction is set to up and the lift is not on the ground floor" do
             elevator.level = 2
             elevator.direction = 'up'
             expect(elevator.level_up_down).to eq(3)
@@ -80,13 +80,89 @@ describe "elevator" do
             expect(elevator.level_up_down).to eq(elevator.floors.count - 2)
         end
         
-        it "should decrease level by 1 if the lift is not on the top floor and @direction is set to down" do
+        it "should decrease level by 1 if the direction is set to down and the lift is not on the top floor" do
             elevator.direction = 'down'
             elevator.level = 4
             expect(elevator.level_up_down).to eq(3)
         end
     end
 
+    describe "#depart_rider" do
+        it "should remove all passengers from the lift if the lift is stopped on the matching level" do 
+            elevator.level = 1
+            elevator.lift = [1]
+            expect(elevator.depart_rider).to eq([])
+
+            elevator.lift = [5,5]
+            elevator.level = 5
+            expect(elevator.depart_rider).to eq([])
+            
+        end
+        
+        it "should not remove passengers traveling to a different floor" do 
+            elevator.level = 5
+
+            elevator.lift = [5,5,4,2]
+            expect(elevator.depart_rider).to eq([4,2])
+
+            elevator.lift = [1,2,3]
+            expect(elevator.depart_rider).to eq([1,2,3])
+        end
+    end
+
+    describe "#queue?" do
+        it "should return true if there are passengers waiting to board at a given floor" do
+            elevator.floors = [[],[],[1,4],[]]
+            elevator.level = 2
+            expect(elevator.queue?).to eq(true)
+        end
+        
+        it "should return false if there are no passengers waiting to board at a given floor" do
+            elevator.floors = [[],[],[],[]]
+            elevator.level = 2
+            expect(elevator.queue?).to eq(false)
+        end
+    end
+    
+    describe "#add_rider" do        
+        it "The lift should not add a passenger if it is at maximum capacity" do
+            elevator.level = 3
+            elevator.lift = [1,1,1,1,1]
+            elevator.floors = [[],[],[],[1,2],[]]
+            elevator.direction = 'up'
+    
+            expect(elevator.add_rider).to eq([1,1,1,1,1])
+        end
+
+        it "The lift should not add a passenger if the destination floor is higher than current but direction is down" do
+            elevator.level = 3
+            elevator.floors = [[],[],[],[4,4],[]]
+            elevator.direction = 'down'
+        end
+
+        it "The lift should not add a passenger if the destination floor is lower than current but direction is up" do
+            elevator.level = 3
+            elevator.floors = [[],[],[],[1,2],[]]
+            elevator.direction = 'up'
+            
+            expect(elevator.add_rider).to eq([])
+        end
+
+        it "The lift should add a passenger if the destination floor is higher than current and direction is up" do
+            elevator.level = 5
+            elevator.direction = 'up'
+            
+            expect(elevator.add_rider).to eq([5,5,5])
+        end        
+        
+        it "The lift should add a passenger if the destination floor is higher than current and direction is up" do
+            elevator.level = 5
+            expect(elevator.add_rider).to eq([5,5,5])
+            # expect(elevator.add_rider).to eq([])
+        end
+    end
+end
+    
     # describe "#logger" do
     #     it "should add the current level into the log if a passenger boarded or departed and the current level" do
 
@@ -96,6 +172,3 @@ describe "elevator" do
 
     #     end
     # end
-
-
-end
