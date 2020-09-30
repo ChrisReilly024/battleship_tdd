@@ -147,18 +147,20 @@ describe "elevator" do
             
             expect(elevator.add_rider).to eq([])
         end
-
+        
         it "The lift should add a passenger if the destination floor is higher than current and direction is up" do
-            elevator.level = 5
+            elevator.level = 2
+            elevator.floors = [[],[],[4,4],[4],[]]
             elevator.direction = 'up'
             
-            expect(elevator.add_rider).to eq([5,5,5])
+            expect(elevator.add_rider).to eq([4,4])
         end        
         
         it "The lift should add a passenger if the destination floor is higher than current and direction is up" do
-            elevator.level = 5
-            expect(elevator.add_rider).to eq([5,5,5])
-            # expect(elevator.add_rider).to eq([])
+            elevator.level = 3
+            elevator.floors = [[],[],[],[1,2],[]]
+            elevator.direction = 'down'
+            expect(elevator.add_rider).to eq([1,2])
         end
     end
 end

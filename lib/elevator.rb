@@ -42,6 +42,18 @@ class Lift
         @lift
     end
 
+    def add_rider
+        if !full? && queue?
+            @floors[@level].each do |passenger|
+                if @direction == 'up' && passenger > @level && !full?
+                    @lift << passenger
+                elsif @direction == 'down' && passenger < @level && !full?
+                    @lift << passenger
+                end
+            end                
+        end
+        @lift
+    end
 
 end
 
