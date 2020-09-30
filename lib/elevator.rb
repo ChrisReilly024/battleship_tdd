@@ -38,7 +38,10 @@ class Lift
     end
 
     def depart_rider
-        @lift.delete(@level) if @lift.include?(@level)
+        if @lift.include?(@level)
+            @lift.delete(@level) 
+            logger
+        end
         @lift
     end
 
@@ -47,14 +50,19 @@ class Lift
             @floors[@level].each do |passenger|
                 if @direction == 'up' && passenger > @level && !full?
                     @lift << passenger
+                    logger
                 elsif @direction == 'down' && passenger < @level && !full?
                     @lift << passenger
+                    logger
                 end
             end                
         end
         @lift
     end
 
+    def logger
+        @log << @level if @log[-1] != @level
+    end
 end
 
 # a = Lift.new([[],[],[5,5,5],[],],5)

@@ -163,14 +163,41 @@ describe "elevator" do
             expect(elevator.add_rider).to eq([1,2])
         end
     end
+
+    describe "#logger" do
+        it "should add the current level into the log if a passenger boards the elevator at the current level" do
+            elevator.level = 3
+            elevator.floors = [[],[],[],[1,2],[]]
+            elevator.direction = 'down'
+            elevator.add_rider
+            expect(elevator.log).to eq([0,3])
+        end
+
+        it "should add the current floor into the log if a passenger departs the elevator at the current level" do
+            elevator.lift = [3,3]
+            elevator.floors = [[],[],[],[]]
+            elevator.level = 3
+            elevator.depart_rider
+            expect(elevator.log).to eq([0,3])
+        end
+
+        it "should not add the current floor into the log if another passenger already departed during the same stop and it was already entered in the log. Only one entry per stop/action" do
+            elevator.level = 2
+            elevator.lift = [2,2,3]
+            elevator.floors = [[],[],[],[],[]]
+            elevator.direction = 'down'
+            elevator.depart_rider
+            expect(elevator.log).to eq([0,2])
+            expect(elevator.log).to_not eq([0,2,2])
+        end
+
+        it "should not add the current floor into the log if another passenger already boarded on the same stop and it was already entered in the log. Only one entry per stop/action" do
+            elevator.level = 3
+            elevator.floors = [[],[],[],[1,2,1],[]]
+            elevator.direction = 'down'
+            elevator.add_rider
+            expect(elevator.log).to eq([0,3])
+            expect(elevator.log).to_not eq([0,3,3])
+        end
+    end
 end
-    
-    # describe "#logger" do
-    #     it "should add the current level into the log if a passenger boarded or departed and the current level" do
-
-    #     end
-
-    #     it "should not add the current level into the log if the current level is the most recent entry. no repeats" do
-
-    #     end
-    # end
