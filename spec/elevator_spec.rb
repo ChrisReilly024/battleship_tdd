@@ -200,4 +200,35 @@ describe "elevator" do
             expect(elevator.log).to_not eq([0,3,3])
         end
     end
+
+    describe "#change_direct" do
+        it "should set the elevator direction to up if the lift is on the ground floor" do
+            elevator.level = 0
+            expect(elevator.change_direct).to eq('up')
+        end
+
+        it "should set the elevator direction to down if the lift is on the top floor" do
+            elevator.level = elevator.floors.count - 1
+            expect(elevator.change_direct).to eq('down')
+        end
+
+        it "should keep the direction to up if the lift is empty but their are passengers on higher floors traveling up" do
+            elevator.floors = [[],[],[4,5],[],[],[]]
+            elevator.level = 1
+            elevator.direction = 'up'
+
+            expect(elevator.change_direct).to eq('up')
+        end
+
+        it "should keep the direction to up if the lift is empty but their are passengers on higher floors traveling up" do
+            elevator.floors = [[],[0],[1],[],[],[]]
+            elevator.level = 4
+            elevator.direction = 'down'
+
+            expect(elevator.change_direct).to eq('down')
+        end
+        # it "should keep the direction to up if the lift is empty but their are passengers on higher floors traveling up" do
+        # end
+
+    end
 end

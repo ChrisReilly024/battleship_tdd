@@ -63,7 +63,21 @@ class Lift
     def logger
         @log << @level if @log[-1] != @level
     end
+
+    def change_direct
+        if @level == 0 
+            @direction = 'up'
+        elsif @level == @floors.count - 1
+            @direction = 'down'
+        elsif @lift.empty? && @floors[@level + 1..-1].flatten.any? {|rider| rider > @level}
+            @direction = 'up'
+        elsif @lift.empty? && @floors[0...@level].flatten.any? {|rider| rider < @level}
+            @direction = 'down'
+        end
+    end
 end
 
-# a = Lift.new([[],[],[5,5,5],[],],5)
+# a = Lift.new([[],[],[3,3],[]],5)
 # p a.add_rider
+# a.level = 1
+# p a.change_direct
