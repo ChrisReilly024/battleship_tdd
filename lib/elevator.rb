@@ -2,6 +2,7 @@
 class Lift
     attr_reader :capacity
     attr_accessor :lift, :direction, :log, :floors, :level
+  
     def initialize(floors,capacity)
         @floors = floors
         @capacity = capacity
@@ -9,8 +10,9 @@ class Lift
         @lift = []
         @direction = 'up'
         @log = [0]
+        # operate
     end
-
+   
     def full?
         @lift.count >= @capacity
     end
@@ -47,15 +49,20 @@ class Lift
 
     def add_rider
         if !full? && queue?
+            boarded = []
+
             @floors[@level].each do |passenger|
                 if @direction == 'up' && passenger > @level && !full?
                     @lift << passenger
+                    boarded << passenger
                     logger
                 elsif @direction == 'down' && passenger < @level && !full?
                     @lift << passenger
+                    boarded << passenger
                     logger
                 end
-            end                
+            end        
+        @floors[@level] = @floors[@level].select {|rider| !boarded.include?(rider)}
         end
         @lift
     end
@@ -75,9 +82,20 @@ class Lift
             @direction = 'down'
         end
     end
+
+    def operate
+        while !shutdown
+            depart_rider
+            add_rider
+            change_direct
+            level_up_down
+        end
+        @log << 0
+        @log
+    end
 end
 
-# a = Lift.new([[],[],[3,3],[]],5)
-# p a.add_rider
-# a.level = 1
-# p a.change_direct
+a = Lift.new([ [],[],[5,5,5],[],[],[] ], 5)
+
+# # p a.log
+p a.operate

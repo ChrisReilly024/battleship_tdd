@@ -154,13 +154,14 @@ describe "elevator" do
             elevator.direction = 'up'
             
             expect(elevator.add_rider).to eq([4,4])
-        end        
-        
-        it "The lift should add a passenger if the destination floor is higher than current and direction is up" do
+        end       
+
+        it "should remove all passengers who boarded the lift from the current floor" do 
             elevator.level = 3
-            elevator.floors = [[],[],[],[1,2],[]]
+            elevator.floors = [[],[],[],[1,2,4],[]]
             elevator.direction = 'down'
-            expect(elevator.add_rider).to eq([1,2])
+            elevator.add_rider
+            expect(elevator.floors[elevator.level]).to eq([4])
         end
     end
 
@@ -212,7 +213,7 @@ describe "elevator" do
             expect(elevator.change_direct).to eq('down')
         end
 
-        it "should keep the direction to up if the lift is empty but their are passengers on higher floors traveling up" do
+        it "should keep the direction as up if the lift is empty but their are passengers on higher floors traveling up" do
             elevator.floors = [[],[],[4,5],[],[],[]]
             elevator.level = 1
             elevator.direction = 'up'
@@ -220,15 +221,22 @@ describe "elevator" do
             expect(elevator.change_direct).to eq('up')
         end
 
-        it "should keep the direction to up if the lift is empty but their are passengers on higher floors traveling up" do
+        it "should keep the direction as up if the lift is empty but their are passengers on higher floors traveling up" do
             elevator.floors = [[],[0],[1],[],[],[]]
             elevator.level = 4
             elevator.direction = 'down'
 
             expect(elevator.change_direct).to eq('down')
         end
-        # it "should keep the direction to up if the lift is empty but their are passengers on higher floors traveling up" do
+    end
+
+    # describe "#operate" do
+        # it "should be called in the initialize method" do 
+
         # end
 
-    end
+        # it "should call all #methods in the correct order to properly log all operations from start to finish" do 
+
+        # end
+    # end
 end
