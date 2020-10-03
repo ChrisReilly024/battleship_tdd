@@ -1,4 +1,3 @@
-
 class Lift
     attr_reader :capacity
     attr_accessor :lift, :direction, :log, :floors, :level
@@ -76,9 +75,9 @@ class Lift
             @direction = 'up'
         elsif @level == @floors.count - 1
             @direction = 'down'
-        elsif @lift.empty? && @floors[@level + 1..-1].flatten.any? {|rider| rider > @level}
+        elsif @direction == 'up' && @lift.empty? && @floors[@level + 1..-1].flatten.any? {|rider| rider > @level}
             @direction = 'up'
-        elsif @lift.empty? && @floors[0...@level].flatten.any? {|rider| rider < @level}
+        elsif @direction == 'down' && @lift.empty? && @floors[0...@level].flatten.any? {|rider| rider < @level}
             @direction = 'down'
         end
     end
@@ -95,7 +94,7 @@ class Lift
     end
 end
 
-a = Lift.new([ [],[],[5,5,5],[],[],[] ], 5)
-
+# a = Lift.new([ [],[],[5,5,5],[],[],[] ], 5)
+b = Lift.new([[], [0], [], [], [2], [3], []], 5)
 # # p a.log
-p a.operate
+p b.operate
