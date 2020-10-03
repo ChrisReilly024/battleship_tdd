@@ -230,13 +230,13 @@ describe "elevator" do
         end
     end
 
-    # describe "#operate" do
-        # it "should be called in the initialize method" do 
+    describe "#operate" do
+        it "should be called in the initialize method" do 
+            expect(elevator.initialize)
+        end
 
-        # end
+        it "should call all #methods in the correct order to properly log all operations from start to finish" do 
 
-        # it "should call all #methods in the correct order to properly log all operations from start to finish" do 
-
-        # end
-    # end
+        end
+    end
 end

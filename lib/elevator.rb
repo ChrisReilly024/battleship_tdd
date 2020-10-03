@@ -89,12 +89,8 @@ class Lift
             change_direct
             level_up_down
         end
-        @log << 0
+        @log << 0 if @log.last != 0
         @log
     end
 end
 
-# a = Lift.new([ [],[],[5,5,5],[],[],[] ], 5)
-b = Lift.new([[], [0], [], [], [2], [3], []], 5)
-# # p a.log
-p b.operate
